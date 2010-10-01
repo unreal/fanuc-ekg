@@ -17,7 +17,7 @@ ekg
   @ekg_data = Ekg::parse("path_to_some_ekg_file.csv")
   @ekg_data.bins[:v2t1]       # array of collisions by axis in BinV2T1
   @ekg_data.bins[:v1t1][3]    # number of collisions in BinV1T1 for axis 3
-	@ekg_data.alarms[:recent]   # array of recent alarm data
+  @ekg_data.alarms[:recent]   # array of recent alarm data
   @ekg_data.alarms[:worst]    # array of worst alarm data
 
 == REQUIREMENTS:
