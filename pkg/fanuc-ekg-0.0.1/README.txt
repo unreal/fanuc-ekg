@@ -4,7 +4,7 @@
 
 == DESCRIPTION:
 
-fanuc-ekg is a library for turning the data exported from the FANUC Robotics
+fanuc-ekg is a library for accessing the data exported from the FANUC Robotics
 MotionPRO Robot EKG analysis tool.
 
 == FEATURES/PROBLEMS:
