@@ -1,34 +1,33 @@
 
 require File.join(File.dirname(__FILE__), %w[spec_helper])
 
-describe Ekg do
+describe FANUC::Ekg do
 	
 	it "should be able to open a file" do
-		f = Ekg.open(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
+		f = FANUC::Ekg.open(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
 		f.should be_a_kind_of(File)
 	end
 	
 	describe "with file" do
 		before(:each) do
-			@f = Ekg.open(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
+			@f = FANUC::Ekg.open(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
 		end
 		
 		it "should split into a hash" do
-			@s = Ekg.split(@f).should be_a_kind_of(Hash)
+			@s = FANUC::Ekg.split(@f).should be_a_kind_of(Hash)
 		end
 		
 		it "should have the right keys" do
-			Ekg.split(@f).keys.should eql([:bins,:recent,:worst])
+			FANUC::Ekg.split(@f).keys.should eql([:bins,:recent,:worst])
 		end
 	end
 
-	describe Ekg::EkgData do
-		it "should return an Ekg::EkgData object" do
-			Ekg.parse(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv])).should be_a_kind_of(Ekg::EkgData)
+	describe FANUC::Ekg::EkgData do
+		it "should return an FANUC::Ekg::EkgData object" do
+			FANUC::Ekg.parse(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv])).should be_a_kind_of(FANUC::Ekg::EkgData)
 		end
-		
 		before(:each) do
-			@ekg_data = Ekg.parse(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
+			@ekg_data = FANUC::Ekg.parse(File.join(File.dirname(__FILE__), %w[fixtures R14_2010_09_24.csv]))
 		end
 		
 		it "should respond to bins" do
@@ -75,6 +74,7 @@ describe Ekg do
 		it "should have 10 worst alarms" do
 			@ekg_data.alarms[:worst].length.should eql(10)
 		end
+		
 	end
 end
 

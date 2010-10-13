@@ -9,9 +9,9 @@ task :default => 'test:run'
 task 'gem:release' => 'test:run'
 
 Bones {
-  name  'ekg'
+  name  'fanuc-ekg'
   authors  'Jay Strybis'
   email    'jay.strybis@gmail.com'
-  url      'http://github.com/unreal/ekg'
+  url      'http://github.com/unreal/fanuc-ekg'
 }
 
