@@ -79,8 +79,8 @@ module Ekg
 	class Alarm
 		attr_reader :occured_at, :error_text, :safety_io, :velocity, :torque, :angle, :disturbance_torque
 		def initialize(options={})
-			@occured_at = options[:DateTime]
-			@error_text = options[:ErrorText]
+			@occured_at = options["DateTime"]
+			@error_text = options["ErrorText"]
 			@safety_io = options["Safety I/O"]
 			
 			@velocity = {
