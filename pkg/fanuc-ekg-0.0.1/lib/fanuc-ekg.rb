@@ -59,7 +59,14 @@ module Ekg
     Dir.glob(search_me).sort.each {|rb| require rb}
   end
 	
-	require 'csv'
+	# what parser should we use
+	if RUBY_VERSION.to_f >= 1.9
+		require 'csv'
+		PARSER = CSV
+	else
+		require 'faster_csv'
+		PARSER = FasterCSV
+	end
 	
 	class Bin
 		attr_accessor :collision_counts
@@ -183,7 +190,7 @@ module Ekg
 			output = split(f) # split the output into 3 usable CSV sections
 			
 			# parse bins
-			CSV.parse(output[:bins],:headers=>"Group,Bin0,BinV1T1,BinV2T1,BinV1T2,BinV2T2") do |line|
+			PARSER.parse(output[:bins],:headers=>"Group,Bin0,BinV1T1,BinV2T1,BinV1T2,BinV2T2") do |line|
 				@ekg_data.bins[:zero].collision_counts << line['Bin0'].to_i
 				@ekg_data.bins[:v1t1].collision_counts << line['BinV1T1'].to_i
 				@ekg_data.bins[:v2t1].collision_counts << line['BinV2T1'].to_i
@@ -192,12 +199,12 @@ module Ekg
 			end
 			
 			# parse recent alarms
-			CSV.parse(output[:recent],:headers => "MRA_Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
+			PARSER.parse(output[:recent],:headers => "MRA_Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
 				@ekg_data.alarms[:recent] << Ekg::Alarm.new(line.to_hash)
 			end
 			
 			# parse worst disturbances
-			CSV.parse(output[:worst],:headers=>"Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
+			PARSER.parse(output[:worst],:headers=>"Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
 					@ekg_data.alarms[:worst] << Ekg::Alarm.new(line.to_hash)
 			end
 			
