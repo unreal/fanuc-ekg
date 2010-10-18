@@ -92,35 +92,35 @@ module Ekg
 			@safety_io = options["Safety I/O"]
 			
 			@velocity = {
-				:j1 => options["Vel J1[%]"],
-				:j2 => options["Vel J2[%]"],
-				:j3 => options["Vel J3[%]"],
-				:j4 => options["Vel J4[%]"],
-				:j5 => options["Vel J5[%]"]
+				:j1 => options["Vel J1\[%\]"],
+				:j2 => options["Vel J2\[%\]"],
+				:j3 => options["Vel J3\[%\]"],
+				:j4 => options["Vel J4\[%\]"],
+				:j5 => options["Vel J5\[%\]"]
 			}
 			
 			@torque = {
-				:j1 => options["Torq J1[%]"],
-				:j2 => options["Torq J2[%]"],
-				:j3 => options["Torq J3[%]"],
-				:j4 => options["Torq J4[%]"],
-				:j5 => options["Torq J5[%]"]
+				:j1 => options["Torq J1\[%\]"],
+				:j2 => options["Torq J2\[%\]"],
+				:j3 => options["Torq J3\[%\]"],
+				:j4 => options["Torq J4\[%\]"],
+				:j5 => options["Torq J5\[%\]"]
 			}
 			
 			@angle = {
-				:j1 => options["Angle J1[rad]"],
-				:j2 => options["Angle J2[rad]"],
-				:j3 => options["Angle J3[rad]"],
-				:j4 => options["Angle J4[rad]"],
-				:j5 => options["Angle J5[rad]"],
+				:j1 => options["Angle J1\[rad\]"],
+				:j2 => options["Angle J2\[rad\]"],
+				:j3 => options["Angle J3\[rad\]"],
+				:j4 => options["Angle J4\[rad\]"],
+				:j5 => options["Angle J5\[rad\]"],
 			}
 			
 			@disturbance_torque = {
-				:j1 => options["DistTorq J1[%]"],
-				:j2 => options["DistTorq J2[%]"],
-				:j3 => options["DistTorq J3[%]"],
-				:j4 => options["DistTorq J4[%]"],
-				:j5 => options["DistTorq J5[%]"]
+				:j1 => options["DistTorq J1\[%\]"],
+				:j2 => options["DistTorq J2\[%\]"],
+				:j3 => options["DistTorq J3\[%\]"],
+				:j4 => options["DistTorq J4\[%\]"],
+				:j5 => options["DistTorq J5\[%\]"]
 			}	
 		end
 		
@@ -156,20 +156,20 @@ module Ekg
 	
 	class << self
 
-		def split(file)
+		def split(string)
 			@output = {}
 			@str = ""
-			file.each do |line|
-				next if line == "Severity\n"
-				next if line == "Group,Bin0,BinV1T1,BinV2T1,BinV1T2,BinV2T2\n"
-				next if line == "MRA_Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]\n"
-				next if line == "Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]\n"
-				if line == "Most Recent Alarms(MRA) for Group 1\n"
+			string.each_line do |line|
+				next if line =~ /Severity(\r)?\n/
+				next if line =~ /Group,Bin0,BinV1T1,BinV2T1,BinV1T2,BinV2T2(\r)?\n/
+				next if line =~ /MRA_Num,DateTime,ErrorText,Safety I\/O,Vel J1\[%\],Vel J2\[%\],Vel J3\[%\],Vel J4\[%\],Vel J5\[%\],Vel J6\[%\],Vel J7\[%\],Vel J8\[%\],Torq J1\[%\],Torq J2\[%\],Torq J3\[%\],Torq J4\[%\],Torq J5\[%\],Torq J6\[%\],Torq J7\[%\],Torq J8\[%\],Angle J1\[rad\],Angle J2\[rad\],Angle J3\[rad\],Angle J4\[rad\],Angle J5\[rad\],Angle J6\[rad\],Angle J7\[rad\],Angle J8\[rad\],DistTorq J1\[%\],DistTorq J2\[%\],DistTorq J3\[%\],DistTorq J4\[%\],DistTorq J5\[%\],DistTorq J6\[%\],DistTorq J7\[%\],DistTorq J8\[%\](\r)?\n/
+				next if line =~ /Num,DateTime,ErrorText,Safety I\/O,Vel J1\[%\],Vel J2\[%\],Vel J3\[%\],Vel J4\[%\],Vel J5\[%\],Vel J6\[%\],Vel J7\[%\],Vel J8\[%\],Torq J1\[%\],Torq J2\[%\],Torq J3\[%\],Torq J4\[%\],Torq J5\[%\],Torq J6\[%\],Torq J7\[%\],Torq J8\[%\],Angle J1\[rad\],Angle J2\[rad\],Angle J3\[rad\],Angle J4\[rad\],Angle J5\[rad\],Angle J6\[rad\],Angle J7\[rad\],Angle J8\[rad\],DistTorq J1\[%\],DistTorq J2\[%\],DistTorq J3\[%\],DistTorq J4\[%\],DistTorq J5\[%\],DistTorq J6\[%\],DistTorq J7\[%\],DistTorq J8\[%\](\r)?\n/
+				if line =~ /Most Recent Alarms\(MRA\) for Group 1(\r)?\n/
 					@output[:bins] = @str
 					@str = ""
 					next
 				end
-				if line == "Worst Disturbance Alarms for Group 1\n"
+				if line =~ /Worst Disturbance Alarms for Group 1(\r)?\n/
 					@output[:recent] = @str
 					@str = ""
 					next
@@ -197,12 +197,12 @@ module Ekg
 			end
 			
 			# parse recent alarms
-			PARSER.parse(output[:recent],:headers => "MRA_Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
+			PARSER.parse(output[:recent],:headers => "MRA_Num,DateTime,ErrorText,Safety I/O,Vel J1\[%\],Vel J2\[%\],Vel J3\[%\],Vel J4\[%\],Vel J5\[%\],Vel J6\[%\],Vel J7\[%\],Vel J8\[%\],Torq J1\[%\],Torq J2\[%\],Torq J3\[%\],Torq J4\[%\],Torq J5\[%\],Torq J6\[%\],Torq J7\[%\],Torq J8\[%\],Angle J1\[rad\],Angle J2\[rad\],Angle J3\[rad\],Angle J4\[rad\],Angle J5\[rad\],Angle J6\[rad\],Angle J7\[rad\],Angle J8\[rad\],DistTorq J1\[%\],DistTorq J2\[%\],DistTorq J3\[%\],DistTorq J4\[%\],DistTorq J5\[%\],DistTorq J6\[%\],DistTorq J7\[%\],DistTorq J8\[%\]") do |line|
 				@ekg_data.alarms[:recent] << Ekg::Alarm.new(line.to_hash)
 			end
 			
 			# parse worst disturbances
-			PARSER.parse(output[:worst],:headers=>"Num,DateTime,ErrorText,Safety I/O,Vel J1[%],Vel J2[%],Vel J3[%],Vel J4[%],Vel J5[%],Vel J6[%],Vel J7[%],Vel J8[%],Torq J1[%],Torq J2[%],Torq J3[%],Torq J4[%],Torq J5[%],Torq J6[%],Torq J7[%],Torq J8[%],Angle J1[rad],Angle J2[rad],Angle J3[rad],Angle J4[rad],Angle J5[rad],Angle J6[rad],Angle J7[rad],Angle J8[rad],DistTorq J1[%],DistTorq J2[%],DistTorq J3[%],DistTorq J4[%],DistTorq J5[%],DistTorq J6[%],DistTorq J7[%],DistTorq J8[%]") do |line|
+			PARSER.parse(output[:worst],:headers=>"Num,DateTime,ErrorText,Safety I/O,Vel J1\[%\],Vel J2\[%\],Vel J3\[%\],Vel J4\[%\],Vel J5\[%\],Vel J6\[%\],Vel J7\[%\],Vel J8\[%\],Torq J1\[%\],Torq J2\[%\],Torq J3\[%\],Torq J4\[%\],Torq J5\[%\],Torq J6\[%\],Torq J7\[%\],Torq J8\[%\],Angle J1\[rad\],Angle J2\[rad\],Angle J3\[rad\],Angle J4\[rad\],Angle J5\[rad\],Angle J6\[rad\],Angle J7\[rad\],Angle J8\[rad\],DistTorq J1\[%\],DistTorq J2\[%\],DistTorq J3\[%\],DistTorq J4\[%\],DistTorq J5\[%\],DistTorq J6\[%\],DistTorq J7\[%\],DistTorq J8\[%\]") do |line|
 					@ekg_data.alarms[:worst] << Ekg::Alarm.new(line.to_hash)
 			end
 			
