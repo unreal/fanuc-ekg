@@ -1,3 +1,6 @@
+== 0.1.0 / 2010-10-18
+* FANUC::EKG.parse now expects a File, not a path
+
 == 0.0.2 / 2010-10-14
 * Support both Ruby 1.8 and Ruby 1.9
 

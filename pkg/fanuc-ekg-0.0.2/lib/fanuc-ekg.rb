@@ -67,6 +67,7 @@ module Ekg
 		require 'faster_csv'
 		PARSER = FasterCSV
 	end
+	require 'open-uri' #for opening URLs
 	
 	class Bin
 		attr_accessor :collision_counts
@@ -154,10 +155,7 @@ module Ekg
 	
 	
 	class << self
-		def open(file_path)
-				File.open(file_path)
-		end
-			
+
 		def split(file)
 			@output = {}
 			@str = ""
@@ -183,10 +181,10 @@ module Ekg
 		end
 		
 		
-		def parse(file_path)
+		def parse(file)
 			@ekg_data = FANUC::Ekg::EkgData.new
 			
-			f = open(file_path)
+			f = open(file)
 			output = split(f) # split the output into 3 usable CSV sections
 			
 			# parse bins

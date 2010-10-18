@@ -13,7 +13,7 @@ MotionPRO Robot EKG analysis tool.
 
 == SYNOPSIS:
 
-	@ekg_data = FANUC::Ekg.parse("path_to_some_ekg_file.csv")
+	@ekg_data = FANUC::Ekg.parse(File.new('path_to_some_file.csv'))
 	@ekg_data.bins[:v2t1]        # array of collisions by axis in BinV2T1
 	@ekg_data.bins[:v2t1].total  # total collisions in BinV2T1
 	@ekg_data.bins[:v1t1][3]     # number of collisions in BinV1T1 for axis 3
