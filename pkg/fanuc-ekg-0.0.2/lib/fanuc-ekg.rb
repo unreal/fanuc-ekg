@@ -184,7 +184,7 @@ module Ekg
 		def parse(file)
 			@ekg_data = FANUC::Ekg::EkgData.new
 			
-			f = open(file)
+			f = open(file).read
 			output = split(f) # split the output into 3 usable CSV sections
 			
 			# parse bins
